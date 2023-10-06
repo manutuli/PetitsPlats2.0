@@ -1,0 +1,42 @@
+
+
+/* semantics */
+body {
+    margin: 0;
+}
+ul {
+    list-style: none;
+}
+header {
+    background-color: darkgray;
+}
+main {
+    background-color: lightgrey;
+}
+section {
+    width: 80%;
+}
+article {
+    background-color: aliceblue;
+    width: 30%;
+    gap: 2%;
+}
+.header_image_bloc {
+    background-color: blueviolet;
+}
+
+/* header */
+#ingredients ,
+#ustensiles ,
+#appareils {
+    width: 50px;
+    text-decoration: none;
+}
+#searchbar {
+    width: 60%;
+}
+
+
+/* content */
+/* .content {} */
+
