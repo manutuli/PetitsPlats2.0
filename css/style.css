@@ -1,6 +1,7 @@
 
 
 
+/* utils */
 @font-face {
     font-family: Manrope;
     src: url("../assets/fonts/manrope/static/Manrope-Regular.ttf");
@@ -11,6 +12,16 @@
 }
 .hidden {
     display: none;
+}
+[hidden] {
+    display: none;
+}
+[active] {
+    background-color: #FFD15B;
+}
+.tag [active]::after {
+    content: url("../assets/icons/circle-xmark.svg");
+    width: 10px;
 }
 
 
@@ -62,21 +73,26 @@ div, span {
     display: flex;
     flex-direction: column;
 }
-/* svg {
-    width: 10px;
-} */
 
 
 
 /* header */
 .logo {
-    background-color: aqua;
-    inset: 40px;
+    flex-direction: row;
+    align-items: end;
+    gap: 5px;
+    position: absolute;
+    top: 15px;
+    left: 5%;
 }
 .header_image_bloc {
-    background-color: blueviolet;
-    background-image:  url("../photos/Recette01.jpg");
+    background-image: linear-gradient(
+        to left bottom,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.9)
+      ), url("../photos/Recette01.jpg");
     background-size: cover;
+    background-blend-mode: multiply;
     padding: 15%;
 }
 .header_image_bloc::after {
@@ -92,82 +108,122 @@ div, span {
 
 /* searchbar */
 #searchbar {
-    font-family: Manrope;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
     border-color: transparent;
 }
-.searchbar__container {
-    flex-direction: row;
+.searchbar__container--main {
+    align-items: center;
+    border-radius: 10px;
     background-color: white;
+    flex-direction: row;
+    font-family: Manrope;
+    padding: 3px;
 }
-.searchbar__container > input {
-    width: 80%;
+.searchbar__container--main > input {
+    width: 100%;
+    padding: 10px;
+}
+.searchbar_icon_container--main::after {
+    content: url("../assets/icons/magnifying-glass-solid.svg");
 }
 .searchbar_icon_container::after {
     content: url("../assets/icons/magnifying-glass-solid.svg");
 }
+.searchbar_icon_container--main:hover {
+    background-color: #015DFF;
+    mix-blend-mode: difference;
+}
+.searchbar_icon_container--main {
+    background-color: black;
+    border-radius: 10px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+}
+.searchbar__container {
+    flex-direction: row;
+    border: 1px solid #EDEDED;
+    font-family: Manrope;
+}
 .searchbar_icon_container {
-    justify-content: center;
-    width: 15px;
     padding: 5px;
+    width: 20px;
+    height: 20px;
+}
+.keyword__search {
+    width: 80%;
+    border: transparent;
 }
 
 
 
-/* keywords */
-.header_tags_bloc {
+/* keyword field */
+.keyword {
+    flex-direction: row;
+    justify-content: space-between;
+}
+.keyword[active]:hover::after {
+    content: url("../assets/icons/circle-xmark.svg");
+    width: 12px;
+    border-radius: 20px;
+    background-color: white;
+    mix-blend-mode: exclusion;
+}
+.keyword:hover {
+    background-color: #FFD15B;
+    cursor: pointer;
+}
+.keyword__container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.header_fields_bloc {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
 }
-.header_tags_bloc:hover {
-    height: 300px;
+.header_fields_list:hover {
+    height: 200px;
     /* animation: dropdown 0.5s ease-out; */
 }
 /* .header_tags_block:not(:hover) {
     height: 50px;
     animation: dropback 0.5s ease-in;
 } */
-.header_tags_list {
+.header_fields_list {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
-.tag__container {
+.field__container {
     flex-direction: row;
     justify-content: space-between;
 }
-.tag__container > .tag__icon {
+.field__container > .field__icon {
     width: 10px;
 }
-.tag__container > .tag__icon::after {
+.field__container > .field__icon::after {
     content: url("../assets/icons/chevron-up.svg");
 }
-.header_tags_item:hover  .tag__icon::after {
+.header_fields_item:hover  .field__icon::after {
     content: url("../assets/icons/chevron-down.svg");
 }
-.header_tags_item {
+.header_fields_item {
     height: 30px;
     width: 150px;
     font-family: Manrope;
     margin-right: 30px;
 }
-.header_tags_item > h3 {
+.header_fields_item > h3 {
     font-size: 14px;
 }
-.header_tags_item:not(:hover) > #ingredients,
-.header_tags_item:not(:hover) > #appliance ,
-.header_tags_item:not(:hover) > #ustensils {
+#tags > .header_fields_item {
+    display: flex;
+    justify-content: space-between;
+}
+.header_fields_item:not(:hover) > #ingredients,
+.header_fields_item:not(:hover) > #appliance ,
+.header_fields_item:not(:hover) > #ustensils {
     display: none;
-}
-.keyword:hover {
-    background-color: #FFD15B;
-}
-.keyword__container {
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 #ingredients,
 #ustensils,
@@ -190,6 +246,54 @@ div, span {
 
 
 
+/* tags */
+#tags {}
+.tag {}
+.header_tags_bloc {
+    /* padding: 10px; */
+}
+.header_tags_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.header_tags_item:hover {
+    cursor: pointer;
+}
+.header_tags_item {
+    display: flex;
+    flex-direction: row;
+    font-family: Manrope;
+    padding: 0;
+    background-color: #FFD15B;
+}
+.close__button {
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 30px;
+}
+.close__button::after {
+    content: url("../assets/icons/circle-xmark.svg");
+    width: 20px;
+    border-radius: 25px;
+    background-color: #FFD15B;
+}
+.close__button:hover {
+    mix-blend-mode: difference;
+}
+
+.header_tags_item--container {
+    justify-content: center;
+    height: 40px;
+    width: 120px;
+}
+.header_tags_item--container > h3 {
+    margin-left: 20px;
+}
+
+
+
 /* cards */
 #main_content {}
 .card {
@@ -205,7 +309,7 @@ div, span {
     object-fit: cover;
 }
 .card > *:not(img) {
-    padding: 10px;
+    padding: 20px;
 }
 .card__time {
     margin: 0;
@@ -230,24 +334,21 @@ article > h3 {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.ingredient {}
 .ingredients__container {
     font-size: 12px;
     font-family: Manrope;
-    height: 150px;
+    height: 180px;
     flex-wrap: wrap;
-    /* border: 2px solid #FFD15B; */
 }
 .ingredient {
+    flex-direction: row;
+    flex-wrap: wrap;
     width: fit-content;
     font-size: 12px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap
 }
 .ingredient::after {
+    display: block;
     content: attr(data-quantity);
-    /* position: relative; */
     color: lightgray;
 }
 
