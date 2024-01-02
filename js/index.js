@@ -9,7 +9,6 @@ function initModel(recipe, model) {
   model.setTitle(recipe.name.toLowerCase());
   model.setDescription(recipe.description.toLowerCase());
   model.setAppliance(recipe.appliance.toLowerCase());
-
   //
   for (const obj of recipe.ingredients) {
     model.setIngredient(obj.ingredient.toLowerCase());
@@ -170,27 +169,43 @@ function toggleElements(option, selector) {
   const nodes = document.querySelectorAll(`.${selector}`);
   if (option === "hide") {
     console.log("hide : ", selector)
-    nodes.forEach(function (element) {
+    for (let index = 0; index < nodes.length; index++) {
+      const element = nodes[index];
       element.setAttribute("hidden", "")
-    });
+    }
+    // nodes.forEach(function (element) {
+    //   element.setAttribute("hidden", "")
+    // });
   }
   if (option === "show") {
     console.log("show : ", selector)
-    nodes.forEach(function (element) {
+    for (let index = 0; index < nodes.length; index++) {
+      const element = nodes[index];
       element.removeAttribute("hidden")
-    });
+    }
+    // nodes.forEach(function (element) {
+    //   element.removeAttribute("hidden")
+    // });
   }
   if (option === "enable") {
     console.log("enable : ", selector)
-    nodes.forEach(function (node) {
-      if ( node.hasAttribute("hidden") ) node.removeAttribute("hidden")
-    });
+    for (let index = 0; index < nodes.length; index++) {
+      const element = nodes[index];
+      if ( element.hasAttribute("hidden") ) element.removeAttribute("hidden")
+    }
+    // nodes.forEach(function (node) {
+    //   if ( node.hasAttribute("hidden") ) node.removeAttribute("hidden")
+    // });
   }
   if (option === "disable") {
     console.log("disable : ", selector)
-    nodes.forEach(function (node) {
-      node.setAttribute("hidden", "")
-    });
+    for (let index = 0; index < nodes.length; index++) {
+      const element = nodes[index];
+      element.setAttribute("hidden", "")
+    }
+    // nodes.forEach(function (node) {
+    //   node.setAttribute("hidden", "")
+    // });
   }
 }
 
@@ -237,13 +252,9 @@ function mainSearchFieldEventHandler(searchbar, model) {
             nodesArray[index].removeAttribute("hidden")
           }
         }
-        // nodes && nodes.length > 0
-        //   ? nodes.forEach((node) => node.removeAttribute("hidden"))
-        //   : null;
         updateCardCount(e.target.value);
       }
       for (let index = 0; index < model.description.length; index++) {
-        // const element = model.description[index];
         const nodes = searchInput(
           "article",
           "description",
@@ -256,13 +267,9 @@ function mainSearchFieldEventHandler(searchbar, model) {
             nodesArray[index].removeAttribute("hidden")
           }
         }
-        // nodes && nodes.length > 0
-        //   ? nodes.forEach((node) => node.removeAttribute("hidden"))
-        //   : null;
         updateCardCount(e.target.value);
       }
       for (let index = 0; index < ingredients.length; index++) {
-        // const element = ingredients[index];
         const nodes = searchInput(
           "article",
           "ingredients",
@@ -275,28 +282,8 @@ function mainSearchFieldEventHandler(searchbar, model) {
             nodesArray[index].removeAttribute("hidden")
           }
         }
-        // nodes && nodes.length > 0
-        //   ? nodes.forEach((node) => node.removeAttribute("hidden"))
-        //   : null;
         updateCardCount(e.target.value);
       }
-      // model.titles.forEach(title => {
-      //   const nodes = searchInput("article", "title", e.target.value.toLowerCase(), title);
-      //   nodes && nodes.length > 0 ? nodes.forEach(node => node.removeAttribute("hidden")) : null;
-      //   updateCardCount(e.target.value);
-      // });
-      // // 
-      // model.descriptions.forEach(description => {
-      //   const nodes = searchInput("article", "description", e.target.value.toLowerCase(), description);
-      //   nodes && nodes.length > 0 ? nodes.forEach(node => node.removeAttribute("hidden")) : null;
-      //   updateCardCount(e.target.value);
-      // });
-      // // 
-      // model.ingredients.forEach(ingredient => {
-      //   const nodes = searchInput("article", "ingredients", e.target.value.toLowerCase(), ingredient);
-      //   nodes && nodes.length > 0 ? nodes.forEach(node => node.removeAttribute("hidden")) : null;
-      //   updateCardCount(e.target.value);
-      // });
     });
 }
 
@@ -317,7 +304,7 @@ function fieldsSearchEventHandler(selector, element, keywordsArray) {
 
 
 
-/* **** */
+/* ** adding a tag searches through nodes:not(hidden) ** */
 // fields Keyword click
 function fieldsKeywordsEventHandler(selector, element, keyword) {
   element.addEventListener("click", (e) => {
@@ -340,15 +327,6 @@ function fieldsKeywordsEventHandler(selector, element, keyword) {
       // enable cards
       toggleElements("hide", "card:not([hidden])")
       toggleElements("enable", `card[${selector}*="${keyword}"]`)
-      if (tags.length > 0) {
-        tags.forEach(function (tag) {
-          console.log(tag)
-          toggleElements("enable", `card[${selector}*="${tag.getAttribute("name")}"]`)
-          updateCardCount()
-          return
-        })
-      }
-      // toggleElements("show", "card")
       updateCardCount()
     }
   })
